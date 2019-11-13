@@ -1,19 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.MainActivity">
+        xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello World!"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+    <data>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <variable
+                name="viewModel"
+                type="com.senra.assing.quicknews.ui.TopHeadlinesViewModel" />
+    </data>
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            app:refreshing="@{viewModel.showLoading}"
+            app:onRefreshListener="@{() -> viewModel.retry()}"
+            >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".ui.MainActivity">
+            <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/toolbarHeight"
+                    android:background="@color/white"
+                    android:visibility="visible"
+                    app:titleTextAppearance="@style/ToolbarTitleAppearance"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:popupTheme="@style/OverflowMenu" >
+
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/top_headlines"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginBottom="14dp"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/ToolbarTitleAppearance" />
+
+            </androidx.appcompat.widget.Toolbar>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/errorView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:visibilityCondition="@{viewModel.showError}"
+                    tools:visibility="visible">
+
+
+                <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="32dp"
+                        android:text="@string/something_went_wrong"
+                        android:textAlignment="center"
+                        android:textColor="#4A4A4A"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toTopOf="@+id/button"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                <Button
+                        android:id="@+id/button"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/background_retry"
+                        android:maxWidth="328dp"
+                        android:onClick="@{(v) -> viewModel.retry()}"
+                        android:text="@string/retry"
+                        android:textColor="#31B057"
+                        android:textSize="15dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/repo_list"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="#ffffff"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                    app:visibilityCondition="@{viewModel.showData}"
+                    tools:visibility="visible" />
+
+            <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:visibilityCondition="@{viewModel.showLoading}"
+                    tools:visibility="gone" />
+
+            <View
+                    android:id="@+id/view"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/divider"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/toolbar"
+                    tools:visibility="visible" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>

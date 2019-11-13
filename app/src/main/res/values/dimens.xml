@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="card_height">
+        300dp
+    </dimen>
+
+    <integer name="max_description_lines">2</integer>
+    <dimen name="main_toolbar_title_text_size">21dp</dimen>
+    <dimen name="toolbarHeight">56dp</dimen>
+</resources>

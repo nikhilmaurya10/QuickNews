@@ -1,12 +1,8 @@
 package com.senra.assing.quicknews
 
-import com.senra.assing.quicknews.DispatcherProvider
 import com.senra.assing.quicknews.data.NewsService
 import com.senra.assing.quicknews.model.TopHeadlines
-import com.senra.assing.quicknews.testObserver
-import com.senra.assing.quicknews.ui.ArticleListState
 import com.senra.assing.quicknews.ui.TopHeadlinesViewModel
-import com.senra.assing.quicknews.whenever
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals

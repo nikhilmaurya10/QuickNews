@@ -67,4 +67,8 @@ class TopHeadlinesViewModel(
         this.state.value = newState
         notifyChange()
     }
+
+    fun retry() {
+
+    }
 }
