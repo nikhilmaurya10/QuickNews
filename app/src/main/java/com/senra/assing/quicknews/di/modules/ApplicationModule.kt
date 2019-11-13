@@ -4,6 +4,7 @@ import dagger.Provides
 import android.app.Application
 import androidx.room.Room
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.senra.assing.quicknews.App
 import com.senra.assing.quicknews.data.NewsService
 import com.senra.assing.quicknews.data.local.NewsDB
 import com.senra.assing.quicknews.data.remote.NewsAPI
@@ -22,7 +23,7 @@ class ApplicationModule(private val mApplication: Application) {
     @Provides
     fun getRetrofit(client: OkHttpClient) : Retrofit {
             return Retrofit.Builder()
-                .baseUrl("https://newsapi.org/v2/")
+                .baseUrl((mApplication as App).baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .client(client)

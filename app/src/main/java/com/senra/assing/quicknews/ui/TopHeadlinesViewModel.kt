@@ -47,17 +47,21 @@ class TopHeadlinesViewModel(
                 setState(ArticleListState.Result(cachedData))
             }
 
-            val newState = withContext(dispatcher.IO) {
-                try {
-                    val response = newsRepository.getTopHeadlines()
-                    return@withContext ArticleListState.Result(response)
-                } catch (error: Throwable) {
-                    return@withContext ArticleListState.Error(error)
-                }
-            }
-
-            setState(newState)
+            getLatestData()
         }
+    }
+
+    private suspend fun getLatestData() {
+        val newState = withContext(dispatcher.IO) {
+            try {
+                val response = newsRepository.getTopHeadlines()
+                return@withContext ArticleListState.Result(response)
+            } catch (error: Throwable) {
+                return@withContext ArticleListState.Error(error)
+            }
+        }
+
+        setState(newState)
     }
 
     private fun startLoading() {
@@ -69,6 +73,9 @@ class TopHeadlinesViewModel(
     }
 
     fun retry() {
-
+        viewModelScope.launch {
+            getLatestData()
+        }
     }
+
 }

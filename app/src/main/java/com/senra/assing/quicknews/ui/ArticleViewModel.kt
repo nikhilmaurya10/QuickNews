@@ -32,5 +32,4 @@ class ArticleViewModel : BaseObservable() {
     val url : String
         get() = article?.url.orEmpty()
 
-
 }

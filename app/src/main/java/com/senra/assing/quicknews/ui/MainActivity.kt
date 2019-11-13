@@ -1,5 +1,6 @@
 package com.senra.assing.quicknews.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,14 +10,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.room.Room
 import com.senra.assing.quicknews.App
 import com.senra.assing.quicknews.DispatcherProvider
 import com.senra.assing.quicknews.R
 import com.senra.assing.quicknews.data.NewsService
-import com.senra.assing.quicknews.data.local.NewsDB
-import com.senra.assing.quicknews.data.remote.NewsAPI
 import com.senra.assing.quicknews.databinding.ActivityMainBinding
+import com.senra.assing.quicknews.ui.articleView.ArticleViewActivity
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -25,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     @Inject lateinit var newsService : NewsService
     private lateinit var binding: ActivityMainBinding
-    private val newsListAdapter = NewsListAdapter()
+    private val newsListAdapter = NewsListAdapter(this::onArticleClicked)
 
     private val viewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -59,9 +58,15 @@ class MainActivity : AppCompatActivity() {
         )
     }
     private fun setupRecyclerView() {
-        val recyclerView = binding.repoList
+        val recyclerView = binding.articleList
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = newsListAdapter
+    }
+
+    private fun onArticleClicked(url : String) {
+        val intent = Intent(this, ArticleViewActivity::class.java)
+        intent.putExtra("url", url)
+        startActivity(intent)
     }
 
 }

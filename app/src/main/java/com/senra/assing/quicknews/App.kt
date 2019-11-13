@@ -6,7 +6,7 @@ import com.senra.assing.quicknews.di.component.DaggerApplicationComponent
 import com.senra.assing.quicknews.di.modules.ApplicationModule
 
 
-class App: Application() {
+open class App: Application() {
 
     companion object {
         lateinit var appComponent: ApplicationComponent
@@ -21,4 +21,7 @@ class App: Application() {
             .applicationModule(ApplicationModule(this))
             .build()
     }
+
+    open val baseUrl: String
+        get() = "https://newsapi.org/v2/"
 }

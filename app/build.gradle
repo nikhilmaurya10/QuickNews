@@ -14,7 +14,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.senra.assing.quicknews.MockTestRunner"
     }
     buildTypes {
         release {
@@ -32,6 +32,10 @@ android {
     dataBinding {
         enabled = true
     }
+    testOptions {
+        animationsDisabled = true
+    }
+
 }
 
 dependencies {
@@ -55,20 +59,22 @@ dependencies {
     //AndroidTests
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    androidTestImplementation "com.squareup.okhttp3:mockwebserver:3.14.4"
+    androidTestImplementation 'androidx.test.espresso:espresso-intents' +
+            ':3.2.0'
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:4.2.2"
     androidTestImplementation "androidx.room:room-testing:2.2.1"
 
     androidTestImplementation "androidx.test:core:1.2.0"
     androidTestImplementation "androidx.test:runner:1.2.0"
     androidTestImplementation "androidx.test:rules:1.2.0"
     androidTestImplementation "androidx.test.ext:junit:1.1.1"
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.6'
 
     //Networking
     implementation 'com.squareup.retrofit2:retrofit:2.6.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
-    implementation 'com.squareup.okhttp3:okhttp:3.14.4'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.2'
+    implementation 'com.squareup.okhttp3:okhttp:4.2.2'
 
     //Coroutines
 
@@ -92,5 +98,8 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.25.2'
 
     kapt "com.android.databinding:compiler:3.5.1"
+
+    //Better webview
+    implementation 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
 
 }

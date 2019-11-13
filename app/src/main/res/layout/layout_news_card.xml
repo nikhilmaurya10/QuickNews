@@ -11,7 +11,10 @@
     <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp">
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:cardCornerRadius="4dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -51,7 +54,7 @@
                     app:layout_constraintVertical_bias="1.0">
 
                 <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/title"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -107,7 +110,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         tools:text="20 Dec 2019"
-                        android:text="@{viewModel.publishedAt}"/>
+                        app:bindPublishDateDate="@{viewModel.publishedAt}"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView

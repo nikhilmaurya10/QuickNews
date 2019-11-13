@@ -62,7 +62,7 @@
 
 
                 <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/title"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -96,7 +96,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/repo_list"
+                    android:id="@+id/article_list"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:background="#ffffff"
@@ -105,7 +105,9 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/toolbar"
                     app:visibilityCondition="@{viewModel.showData}"
-                    tools:visibility="visible" />
+                    tools:visibility="visible"
+                    android:paddingBottom="8dp"
+                    android:clipToPadding="false"/>
 
             <ProgressBar
                     android:id="@+id/progress_bar"

@@ -1,12 +1,13 @@
 package com.senra.assing.quicknews.ui
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.senra.assing.quicknews.databinding.LayoutNewsCardBinding
 import com.senra.assing.quicknews.model.TopHeadlines.*
 
-class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
+class NewsListAdapter(private val articleClickListner: ((String) -> Unit)) : RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
 
     var items: List<Article> = ArrayList()
         set(value) {
@@ -22,7 +23,7 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
         val binding = LayoutNewsCardBinding.inflate(inflater, parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(binding, articleClickListner)
     }
 
 
@@ -36,18 +37,30 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
         holder.bindArticle(repo)
     }
 
+    fun onArticleClicked(context : Context, url : String) {
+
+    }
+
 
     class ViewHolder(
-        private val binding: LayoutNewsCardBinding) : RecyclerView.ViewHolder(binding.root) {
+        private val binding: LayoutNewsCardBinding,
+        private val articleClickListner: (String) -> Unit) : RecyclerView.ViewHolder(binding.root) {
         private val viewModel = ArticleViewModel()
 
         init {
             binding.viewModel = viewModel
+            binding.root.setOnClickListener {
+                viewModel.url.let(articleClickListner::invoke)
+            }
         }
 
         fun bindArticle(article: Article) {
             viewModel.article = article
             binding.executePendingBindings()
         }
+    }
+
+    interface onClickListner {
+        fun onViewArticle(url : String)
     }
 }
